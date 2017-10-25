@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>carGame</title>
+	
+	
+	
+</head>
+<body bgcolor="#27B920">
+	<canvas id="gameCar" height="600" width="800" position="relative"></canvas>
+	<script type="text/javascript">
+		var canvas;
+		var canvasCtx;
+		//var line1X=610;
+		var line1Y=0;
+		//var line2X=610;
+		var line2Y=230;
+		var line3Y=450;
+		var carX=700;
+		var carY=500;
+		var car1X=700;
+		var car1Y=100;
+		
+		var car2X=610;
+		var car2Y=300;
+		
+		var car3X=520;
+		var car3Y=500;
+		
+		var car4X=450;
+		var car4Y=200;
+
+		 var carSpeed=20;
+		 
+		 var roadSpeed=10;
+		 var score=0;
+  
+  window.onload=function(){
+   canvas=document.getElementById("gameCar");
+   canvasCtx=canvas.getContext("2d");   
+   setInterval(both,100);//call fun draw in every 1s
+
+   window.addEventListener("keydown",ck,false);
+  
+
+
+   }
+
+   function collision(carX,carY,car1X,car1Y){
+  /* 	if(carY+60>=car1Y&&carY+60<=car1Y&&carX+45>=car1X&&carX+45<=car1X+45||carY>=car1Y&&carY<=car1Y&&carX>=car1X&&carX<=car1X+45||carY>=car1Y&&carY<=car1Y&&carX+45>=car1X&&carX+45<=car1X+45||carY+60>=car1Y&&carY+60<=car1Y&&carX>=car1X&&carX<=car1X+45){
+   		reset();
+   	} */
+//***********************60=42,38****45=35,30******************
+   	
+  	//4
+   	if(carY+60>=car1Y&&carY+60<=car1Y+38&&carX+45>=car1X&&carX+45<=car1X+30){
+   		reset();
+   	}
+   	//1
+  	if(carY>=car1Y&&carY<=car1Y+38&&carX>=car1X&&carX<=car1X+30){
+   		reset();
+   	}
+   	//2
+   	if(carY>=car1Y&&carY<=car1Y+38&&carX+45>=car1X&&carX+45<=car1X+30){
+   		reset();
+   	}
+   	//3
+   	if(carY+60>=car1Y&&carY+60<=car1Y+38&&carX>=car1X&&carX<=car1X+30){
+   		reset();
+   	}  
+   }
+
+//reset
+function reset(){
+	alert("Game🏍🚙🏍 is Over💥💥💥 and Your Score is : "+ score +" ...Presented by Mr. Pawan Kumar Bagri");
+	     line1Y=0;
+		//var line2X=610;
+		 line2Y=230;
+		 line3Y=450;
+		 carX=700;
+		 carY=500;
+		 car1X=700;
+		 car1Y=100;
+		
+		 car2X=610;
+		 car2Y=300;
+		
+		 car3X=520;
+		 car3Y=500;
+		
+		 car4X=450;
+		 car4Y=200;
+
+		 carSpeed=20;
+		 
+		 roadSpeed=10;
+		 score=0;
+		 
+}
+
+//use of keyboard
+function ck(key){
+	if (key.keyCode=="37") {
+		carX=carX-30;
+	//	document.write(carx);
+		if(carX<=440+5){
+			carX=440+5;
+
+		}
+	}
+	if (key.keyCode=="39") {
+		carX=carX+30;
+		if(carX>=800-50){
+			carX=800-50;
+		}
+	}
+	if (key.keyCode=="38") {
+		carY=carY-50;
+		if(carY<=0){
+			carY=0;
+		}
+		
+	}
+	if (key.keyCode=="40") {
+
+		carY=carY+50;
+		if(carY>=600-60){
+			carY=600-60;
+
+		}
+	}
+	
+}
+
+   function both(){
+   	     draw();
+    	 move();  
+
+    	 
+    	  collision(carX,carY,car1X,car1Y);	
+    	  collision(carX,carY,car2X,car2Y);	
+    	  collision(carX,carY,car3X,car3Y);
+    	  collision(carX,carY,car4X,car4Y);
+    	   
+   }
+
+function move(){
+         car1Y=car1Y+carSpeed;
+         car2Y=car2Y+carSpeed;
+         car3Y=car3Y+carSpeed;
+         car4Y=car4Y+carSpeed;
+         line1Y=line1Y+roadSpeed;
+         line2Y=line2Y+roadSpeed;
+         line3Y=line3Y+roadSpeed;
+        //reset game is over
+           if(car1Y>=600){
+         	car1Y=0;
+         	score=score+2;
+         	car1X=car1X+40;
+         	if(car1X>=800-50){
+         		car1X=440+20;
+         	}
+         }
+         if (car2Y>=600) {
+         	car2Y=0;
+         	score=score+2;
+         	car2X=car2X+40;
+         	if(car2X>=800-50){
+         		car2X=440+20;
+         	}
+         }
+         if (car3Y>=600) {
+         	car3Y=0;
+         	score=score+2;
+         	car3X=car3X+40;
+         	if(car3X>=800-50){
+         		car3X=440+20;
+         	}
+         }
+         if (car4Y>=600) {
+         	car4Y=0;
+         	score=score+2;
+         	car4X=car4X+40;
+         	if(car4X>=800-50){
+         		car4X=440+20;
+         	}
+         }
+         if (line1Y>=600) {
+         	line1Y=-100;
+         }
+         if (line2Y>=600) {
+         	line2Y=-100;
+         }
+         if (line3Y>=600) {
+         	line3Y=-100;
+         }
+
+         //speed up
+         if(score%20==0){
+         	carSpeed=carSpeed+1;
+         	roadSpeed=roadSpeed+2;
+         }
+}
+
+
+function draw(){
+//road
+   rect("black",440,0,canvas.width,canvas.height);
+   
+   //line1
+   rect("gray",610,line1Y,20,150);
+   //line2
+ rect("gray",610,line2Y,20,150);
+ //line3
+ rect("gray",610,line3Y,20,150);
+ //score text
+canvasCtx.fillStyle="green";
+canvasCtx.font="50px BankFuturistic";
+canvasCtx.fillText("Score : "+score+"",500,300);
+
+ // my car 
+ car("red",carX,carY);
+ //car 1 **
+ car("blue",car1X,car1Y);
+ // car 2
+
+ car("blue",car2X,car2Y);
+ //car 3**
+car("blue",car3X,car3Y);
+//car 4
+car("blue",car4X,car4Y);
+
+
+}
+
+//draw rectangle
+function rect(color,x,y,width,height){
+	canvasCtx.fillStyle=color;
+	canvasCtx.fillRect(x,y,width,height);
+
+}
+
+function car(color,carX,carY){
+   //body
+   rect(color,carX,carY,45,60);
+   //wheel 1
+   rect("white",carX-5,carY+8,5,10);
+   //while 2
+   rect("white",carX-5,carY+60-18,5,10);
+   //wheel 3
+   rect("white",carX+45,carY+8,5,10);
+   //wheel 4
+   rect("white",carX+45,carY+60-18,5,10);
+   //head light 1
+   rect("yellow",carX+4,carY-2,7,2);
+   //head light 2
+   rect("yellow",carX+45-11,carY-2,7,2);
+   //seat 1
+   rect("yellow",carX+10,carY+10,25,15);
+   //seat 2
+   rect("yellow",carX+10,carY+35,25,15);
+
+}
+
+	</script>
+<div style="height: 100px;width: 440px;background-color: gray;margin-top: -100px; font-size: 35px;font-family: Fantasy;text-align: center;">Use key Left👈 ,Right👉,Up👍 and Down👎</div>
+<div style="height: 100px;width: 550px;background-color: gray;margin-top: -100px;margin-left:800px ; font-size: 35px;font-family: Fantasy;text-align: center;">Play and Enjoy <span style="font-size:40px">🚖🏍</span>Game <span style="color:  yellow;">😎💥😎</span>Presented By Mr. Pawan Kumar Bagri</div>
+
+
+</body>
+</html>
